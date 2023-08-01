@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="anggota_view_tree" model="ir.ui.view">
+        <field name="name">anggota.view.tree</field>
+        <field name="model">gkr.anggota</field>
+        <field name="arch" type="xml">
+            <tree string="Anggota">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="anggota_view_form" model="ir.ui.view">
+        <field name="name">gkr.anggota.view.form</field>
+        <field name="model">gkr.anggota</field>
+        <field name="arch" type="xml">
+            <form string="Create new anggota...">
+                <header>
+                    <button name="whatsapp" type="object" string="Whatsapp" class="oe-primary"/>
+                </header>
+                <sheet>
+                <field name="foto" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group string="Data diri">
+                        <field name="name" />
+                        <field name="no_telpon" />
+                        <field name="email" widget="email"/>
+                        <field name="tanggal_lahir" />
+                        <field name="jenis_kelamin" />
+                        <field name="pendidikan" />
+                        <field name="pendidikan_notes" attrs="{'invisible' : [('pendidikan', '!=', 'lainnya')]}"/>
+                    </group>
+                    <group string="Data Gereja">
+                        <field name="nomor_anggota" />
+                        <field name="tanggal_gabung" />
+                        <field name="aktif" />
+                        <field name="jabatan" />
+                        <field name="dibaptis" />
+                        <field name="meninggal" />
+                    </group>
+                    </group>
+                    <notebook>
+                        <page string="Data Keluarga">
+                            <group string="Keluarga">
+                                <field name="ayah" />
+                                <field name="ibu" />
+                                <field name="pasangan_id" />
+                            </group>
+                            <group string="Anak">
+                                <field name="anak_ids"/>
+                            </group>
+                            <group string="Saudara">
+                                <field name="saudara_ids"/>
+                            </group>
+                        </page>
+                        <page string="Baptisan" attrs="{'invisible' : [('dibaptis', '=', False)]}">
+                            <group>
+                                <field name="nomor_baptisan" />
+                                <field name="tanggal_baptis" />
+                                <field name="dibaptis_oleh" />                                
+                            </group>
+                        </page>
+                        <page string="Meninggal" attrs="{'invisible' : [('meninggal', '=', False)]}">
+                            <group>
+                                <field name="tanggal_meninggal" />
+                                <field name="pemakaman" />
+                                <field name="lokasi_penguburan" />
+                            </group>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gkr_anggota_view_kanban" model="ir.ui.view">
+        <field name="name">gkr.anggota.view.kanban</field>
+        <field name="model">gkr.anggota</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_card_image">
+                                <field name="foto" widget="image" options="{'zoom': true}"/>
+                            </div>
+                            <div class="o_card_content">
+                                <div>
+                                    <field name="name"/> <br/>
+                                    <field name="jabatan" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="gkr_anggota_action" model="ir.actions.act_window">
+        <field name="name">Anggota</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gkr.anggota</field>
+        <field name="view_mode">tree,form,kanban</field>        
+    </record>
+
+    <menuitem
+        id="anggota_views_menu"
+        name="Anggota"
+        action="gkr_anggota_action"
+        parent="gkr_menu_root"
+        sequence="10"/>
+</odoo>

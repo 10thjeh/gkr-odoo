@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gkr_anggota,access.gkr.anggota,model_gkr_anggota,,1,1,1,1
+access_gkr_anggota_lines,access.gkr.anggota.lines,model_gkr_anggota_lines,,1,1,1,1
