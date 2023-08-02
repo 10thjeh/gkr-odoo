@@ -37,6 +37,8 @@
                         <field name="jabatan" />
                         <field name="dibaptis" />
                         <field name="meninggal" />
+                        <field name="atestasi_masuk" />
+                        <field name="atestasi_keluar" />
                     </group>
                     </group>
                     <notebook>
@@ -67,6 +69,22 @@
                                 <field name="lokasi_penguburan" />
                             </group>
                         </page>
+                        <page string="Atestasi" attrs="{'invisible' : [('atestasi_masuk', '=', False), ('atestasi_keluar', '=', False)]}">
+                            <group>
+                                <field name="tanggal_atestasi_masuk" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="gereja_asal" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="tanggal_atestasi_keluar" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
+                                <field name="gereja_tujuan" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
+                            </group>
+                        </page>
+                        <!-- <page string="Atestasi" attrs="{'invisible' : [('atestasi_masuk', '=', False), ('atestasi_keluar', '=', 'False)]}">
+                            <group>
+                                <field name="tanggal_atestasi_masuk" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="gereja_asal" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="tanggal_atestasi_keluar" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
+                                <field name="gereja_tujuan" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                            </group>
+                        </page> -->
                     </notebook>
                     
                 </sheet>

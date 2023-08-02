@@ -68,6 +68,20 @@ class Anggota(models.Model):
         inverse_name='anggota_id',
     )
 
+    atestasi_masuk = fields.Boolean(string='Atestasi Masuk')
+    tanggal_atestasi_masuk = fields.Date(
+        string='Tanggal Masuk',
+        default=fields.Date.context_today,
+    )
+    gereja_asal = fields.Char(string='Gereja Asal')
+    
+    atestasi_keluar = fields.Boolean(string='Atestasi Keluar')
+    tanggal_atestasi_keluar = fields.Date(
+        string='Tanggal Keluar',
+        default=fields.Date.context_today,
+    )
+    gereja_tujuan = fields.Char(string='Gereja Tujuan')
+
     """Data Baptis"""
 
     nomor_baptisan = fields.Char(
