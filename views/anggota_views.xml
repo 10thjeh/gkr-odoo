@@ -25,6 +25,7 @@
                         <field name="name" />
                         <field name="no_telpon" />
                         <field name="email" widget="email"/>
+                        <field name="tempat_lahir_id"/>
                         <field name="tanggal_lahir" />
                         <field name="jenis_kelamin" />
                         <field name="pendidikan" />
@@ -46,7 +47,9 @@
                             <group string="Keluarga">
                                 <field name="ayah" />
                                 <field name="ibu" />
-                                <field name="pasangan_id" />
+                                <!-- <field name="pasangan_id" /> -->
+                                <field name="suami_id" attrs="{'invisible' : [('jenis_kelamin', '=', 'L')]}"/>
+                                <field name="istri_id" attrs="{'invisible' : [('jenis_kelamin', '=', 'P')]}"/>
                             </group>
                             <group string="Anak">
                                 <field name="anak_ids"/>
@@ -65,26 +68,25 @@
                         <page string="Meninggal" attrs="{'invisible' : [('meninggal', '=', False)]}">
                             <group>
                                 <field name="tanggal_meninggal" />
+                                <field name="rumah_duka_id"/>
                                 <field name="pemakaman" />
-                                <field name="lokasi_penguburan" />
+                                <field name="lokasi_penguburan_id" attrs="{'invisible' : [('pemakaman', '!=', 'kubur')]}"/>
+                                <field name="lokasi_kremasi_id" attrs="{'invisible' : [('pemakaman', '!=', 'kremasi')]}"/>
                             </group>
                         </page>
                         <page string="Atestasi" attrs="{'invisible' : [('atestasi_masuk', '=', False), ('atestasi_keluar', '=', False)]}">
                             <group>
                                 <field name="tanggal_atestasi_masuk" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
-                                <field name="gereja_asal" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="gereja_asal_id" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
                                 <field name="tanggal_atestasi_keluar" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
-                                <field name="gereja_tujuan" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
+                                <field name="gereja_tujuan_id" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
                             </group>
                         </page>
-                        <!-- <page string="Atestasi" attrs="{'invisible' : [('atestasi_masuk', '=', False), ('atestasi_keluar', '=', 'False)]}">
+                        <page string="Foto Lainnya">
                             <group>
-                                <field name="tanggal_atestasi_masuk" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
-                                <field name="gereja_asal" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
-                                <field name="tanggal_atestasi_keluar" attrs="{'invisible' : [('atestasi_keluar', '=', False)]}"/>
-                                <field name="gereja_tujuan" attrs="{'invisible' : [('atestasi_masuk', '=', False)]}"/>
+                                <field name="foto_ids" class="o_website_sale_image_list" context="{'default_name': name}" mode="kanban" add-label="Add a Media" nolabel="1"/>
                             </group>
-                        </page> -->
+                        </page>
                     </notebook>
                     
                 </sheet>

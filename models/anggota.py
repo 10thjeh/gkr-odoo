@@ -19,13 +19,19 @@ class Anggota(models.Model):
     email = fields.Char(
         string='E-Mail'
     )
+    tempat_lahir_id = fields.Char(
+        string='Tempat Lahir',
+    )
+    
     tanggal_lahir = fields.Date(
         string='Tanggal Lahir'
     )
     jenis_kelamin = fields.Selection([
         ('L', 'Laki-Laki'),
         ('P', 'Perempuan')
-    ], string='Jenis Kelamin')
+    ], string='Jenis Kelamin',
+       default='L'
+       )
 
     pendidikan = fields.Selection([
         ('tidak_sekolah', 'Tidak Sekolah'),
@@ -58,7 +64,9 @@ class Anggota(models.Model):
             ('anggota', 'Anggota / Jemaat'), 
             ('karyawan', 'Karyawan'),
             ('hamba_tuhan_pdt', 'Hamba Tuhan / Pendeta'),
-            ]
+            ],
+        default='anggota'
+        
     )
     
 
@@ -73,14 +81,14 @@ class Anggota(models.Model):
         string='Tanggal Masuk',
         default=fields.Date.context_today,
     )
-    gereja_asal = fields.Char(string='Gereja Asal')
+    gereja_asal_id = fields.Many2one(comodel_name='gkr.gereja', string='Gereja Asal')
     
     atestasi_keluar = fields.Boolean(string='Atestasi Keluar')
     tanggal_atestasi_keluar = fields.Date(
         string='Tanggal Keluar',
         default=fields.Date.context_today,
     )
-    gereja_tujuan = fields.Char(string='Gereja Tujuan')
+    gereja_tujuan_id = fields.Many2one(comodel_name='gkr.gereja', string='Gereja Tujuan')
 
     """Data Baptis"""
 
@@ -101,9 +109,21 @@ class Anggota(models.Model):
     pemakaman = fields.Selection([
         ('kubur', 'Kubur'),
         ('kremasi', 'Kremasi')
-    ], string='Pemakaman')
-    lokasi_penguburan = fields.Char(
-        string='Lokasi Penguburan'
+    ], string='Pemakaman',
+       default='kubur')
+    
+    rumah_duka_id = fields.Many2one(
+        string='Rumah Duka',
+        comodel_name='gkr.rumah.duka',
+    )
+    
+    lokasi_penguburan_id = fields.Many2one(
+        string='Lokasi Pemakaman',
+        comodel_name='gkr.tempat.pemakaman'
+    )
+    lokasi_kremasi_id = fields.Many2one(
+        string='Lokasi Kremasi',
+        comodel_name='gkr.tempat.kremasi'
     )
 
     """Data Keluarga"""
@@ -119,22 +139,17 @@ class Anggota(models.Model):
         domain=[('jenis_kelamin', '=', 'P')]
     )
 
-    pasangan_id = fields.Many2one(
-        string='Pasangan',
+    suami_id = fields.Many2one(
+        string='Suami',
         comodel_name='gkr.anggota',
-        domain=lambda self: self._compute_pasangan_domain()
+        domain=[('jenis_kelamin', '=', 'L')]
     )
 
-    @api.depends('jenis_kelamin')
-    def _compute_pasangan_domain(self):
-        for record in self:
-            if record.jenis_kelamin == 'L':
-                domain = [('jenis_kelamin', '=', 'P')]
-            else:
-                domain = [('jenis_kelamin', '=', 'L')]
-            return domain
-
-
+    istri_id = fields.Many2one(
+        string='Istri',
+        comodel_name='gkr.anggota',
+        domain=[('jenis_kelamin', '=', 'P')]
+    )
     
     anak_ids = fields.Many2many(
         string='Anak',
@@ -164,12 +179,12 @@ class Anggota(models.Model):
         ])
         self.saudara_ids = [(4, s.id) if s.id != self.id else (4, 0) for s in saudara]
 
-    @api.depends('pasangan_id')
+    @api.depends('suami_id', 'istri_id')
     def _compute_anak(self):
         if self.jenis_kelamin == 'L':
-            anak = self.env['gkr.anggota'].search(['&',('ayah', '=', self.id), ('ibu', '=', self.pasangan_id.id)])
+            anak = self.env['gkr.anggota'].search(['&',('ayah', '=', self.id), ('ibu', '=', self.istri_id.id)])
         else:
-            anak = self.env['gkr.anggota'].search(['&',('ayah', '=', self.pasangan_id.id), ('ibu', '=', self.id)])
+            anak = self.env['gkr.anggota'].search(['&',('ayah', '=', self.suami_id.id), ('ibu', '=', self.id)])
         self.anak_ids = [(4, a.id) if a.id != self.id else (4, 0) for a in anak]
     
     def write(self, values):
@@ -190,7 +205,12 @@ class Anggota(models.Model):
             'url'      : 'https://wa.me/'+ final_number
         }
     
-
+    '''Foto dkk'''
+    foto_ids = fields.One2many(
+        comodel_name='gkr.foto', 
+        inverse_name='anggota_id', 
+        string='Foto lainnya')
+    
 
 class AnggotaLines(models.Model):
     _name = 'gkr.anggota.lines'
@@ -206,3 +226,50 @@ class AnggotaLines(models.Model):
         ('orang_tua', 'Orang Tua'),
         ('pasangan', 'Pasangan')
     ], string='Hubungan')
+
+class Gereja(models.Model):
+    _name = 'gkr.gereja'
+    name = fields.Char(
+        string='Nama',
+    )
+
+    alamat = fields.Char(
+        string='Alamat'
+    )
+
+class TempatPemakanam(models.Model):
+    _name = 'gkr.tempat.pemakaman'
+    name = fields.Char(
+        string='Nama',
+    )
+
+    alamat = fields.Char(
+        string='Alamat'
+    )
+
+class TempatKremasi(models.Model):
+    _name = 'gkr.tempat.kremasi'
+    name = fields.Char(
+        string='Nama',
+    )
+
+    alamat = fields.Char(
+        string='Alamat'
+    )    
+
+class RumahDuka(models.Model):
+    _name = 'gkr.rumah.duka'
+    name = fields.Char(
+        string='Nama',
+    )
+
+    alamat = fields.Char(
+        string='Alamat'
+    )
+
+class Foto(models.Model):
+    _name = 'gkr.foto'
+    name = fields.Char(string='Nama Foto')
+    anggota_id = fields.Many2one('gkr.anggota', string='anggota')
+    foto = fields.Binary(string='Foto')
+    

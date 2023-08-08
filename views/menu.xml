@@ -14,4 +14,10 @@
         parent="gkr_menu_root" 
         sequence="10"/>
 
+        <menuitem
+        id="gkr_kedukaan_menu"
+        name="Kedukaan"
+        parent="gkr_menu_root"
+        sequence="30"/>
+
 </odoo>

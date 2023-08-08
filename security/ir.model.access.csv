@@ -1,3 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_gkr_anggota,access.gkr.anggota,model_gkr_anggota,,1,1,1,1
+access_gkr_gereja,access.gkr.gereja,model_gkr_gereja,,1,1,1,1
+access_gkr_tempat_pemakaman,access.gkr.tempat.pemakaman,model_gkr_tempat_pemakaman,,1,1,1,1
+access_gkr_tempat_kremasi,access.gkr.tempat.kremasi,model_gkr_tempat_kremasi,,1,1,1,1
 access_gkr_anggota_lines,access.gkr.anggota.lines,model_gkr_anggota_lines,,1,1,1,1
+access_gkr_rumah_duka,access.gkr.rumah.duka,model_gkr_rumah_duka,,1,1,1,1
+access_gkr_foto,access.gkr.foto,model_gkr_foto,,1,1,1,1

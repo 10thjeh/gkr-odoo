@@ -29,7 +29,12 @@
         'views/views.xml',
         'views/templates.xml',
         'views/anggota_views.xml',
-        'views/menu.xml'
+        'views/menu.xml',
+        'views/gereja_views.xml',
+        'views/krematorium_views.xml',
+        'views/pemakaman_views.xml',
+        'views/rumah_duka_views.xml',
+        'views/foto_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- gkr.rumah.duka tree view -->
+    <record id="gkr_rumah_duka_view_tree" model="ir.ui.view">
+        <field name="name">gkr.rumah.duka.view.tree</field>
+        <field name="model">gkr.rumah.duka</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="alamat"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- gkr.rumah.duka form view -->
+    <record id="gkr_rumah_duka_view_form" model="ir.ui.view">
+        <field name="name">gkr.rumah.duka.view.form</field>
+        <field name="model">gkr.rumah.duka</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="alamat"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gkr_rumah_duka_action" model="ir.actions.act_window">
+        <field name="name">Rumah Duka</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gkr.rumah.duka</field>
+        <field name="view_mode">tree,form</field>        
+    </record>
+
+    <menuitem
+        id="gkr_rumah_duka_menu"
+        name="Rumah Duka"
+        action="gkr_rumah_duka_action"
+        parent="gkr_kedukaan_menu"
+        sequence="20"/>
+</odoo>

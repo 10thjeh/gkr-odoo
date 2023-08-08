@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- gkr.tempat.kremasi tree view -->
+    <record id="gkr_tempat_kremasi_view_tree" model="ir.ui.view">
+        <field name="name">gkr.tempat.kremasi.view.tree</field>
+        <field name="model">gkr.tempat.kremasi</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="alamat"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- gkr.tempat.kremasi form view -->
+    <record id="gkr_tempat_kremasi_view_form" model="ir.ui.view">
+        <field name="name">gkr.tempat.kremasi.view.form</field>
+        <field name="model">gkr.tempat.kremasi</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="alamat"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gkr_tempat_kremasi_action" model="ir.actions.act_window">
+        <field name="name">Krematorium</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gkr.tempat.kremasi</field>
+        <field name="view_mode">tree,form</field>        
+    </record>
+
+    <menuitem
+        id="gkr_tempat_kremasi_menu"
+        name="Krematorium"
+        action="gkr_tempat_kremasi_action"
+        parent="gkr_kedukaan_menu"
+        sequence="20"/>
+</odoo>
